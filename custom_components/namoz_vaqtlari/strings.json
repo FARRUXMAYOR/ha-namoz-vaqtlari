@@ -2,8 +2,22 @@
   "config": {
     "step": {
       "user": {
-        "title": "Namoz Vaqtlari",
-        "description": "Shahar va hisoblash usulini tanlang",
+        "title": "Namoz Vaqtlari — Manba tanlang",
+        "description": "Namoz vaqtlari qaysi manbadan olinsin?",
+        "data": {
+          "source": "API manba"
+        }
+      },
+      "islomapi": {
+        "title": "Namoz Vaqtlari — islomapi.uz",
+        "description": "O'zbekiston Musulmonlar Idorasi ma'lumotlari asosida",
+        "data": {
+          "city": "Shahar"
+        }
+      },
+      "aladhan": {
+        "title": "Namoz Vaqtlari — Aladhan.com",
+        "description": "Xalqaro hisoblash usuli asosida",
         "data": {
           "city": "Shahar",
           "method": "Hisoblash usuli"

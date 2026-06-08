@@ -4,7 +4,14 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import CONF_CITY, DOMAIN, PRAYER_NAMES
+from .const import (
+    CONF_CITY,
+    CONF_SOURCE,
+    DOMAIN,
+    PRAYER_NAMES_ALADHAN,
+    PRAYER_NAMES_ISLOMAPI,
+    SOURCE_ISLOMAPI,
+)
 from .coordinator import NamozVaqtlariCoordinator
 
 
@@ -15,10 +22,16 @@ async def async_setup_entry(
 ) -> None:
     coordinator: NamozVaqtlariCoordinator = hass.data[DOMAIN][entry.entry_id]
     city = entry.data[CONF_CITY]
+    source = entry.data.get(CONF_SOURCE, "")
+
+    if source == SOURCE_ISLOMAPI:
+        prayer_map = PRAYER_NAMES_ISLOMAPI
+    else:
+        prayer_map = PRAYER_NAMES_ALADHAN
 
     async_add_entities([
-        NamozSensor(coordinator, prayer_key, prayer_name, city)
-        for prayer_key, prayer_name in PRAYER_NAMES.items()
+        NamozSensor(coordinator, prayer_key, prayer_name, city, source)
+        for prayer_key, prayer_name in prayer_map.items()
     ])
 
 
@@ -29,12 +42,15 @@ class NamozSensor(CoordinatorEntity, SensorEntity):
         prayer_key: str,
         prayer_name: str,
         city: str,
+        source: str,
     ) -> None:
         super().__init__(coordinator)
         self._prayer_key = prayer_key
         self._prayer_name = prayer_name
         self._city = city
-        self._attr_unique_id = f"{DOMAIN}_{city}_{prayer_key}".lower().replace(" ", "_")
+        self._source = source
+        uid = f"{DOMAIN}_{city}_{prayer_key}".lower().replace(" ", "_").replace("'", "").replace("/", "_")
+        self._attr_unique_id = uid
         self._attr_name = f"{prayer_name} ({city})"
         self._attr_icon = "mdi:clock-outline"
 
@@ -49,4 +65,5 @@ class NamozSensor(CoordinatorEntity, SensorEntity):
         return {
             "shahar": self._city,
             "namoz": self._prayer_name,
+            "manba": self._source,
         }
