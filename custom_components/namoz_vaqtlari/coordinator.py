@@ -5,6 +5,7 @@ from typing import Any
 import aiohttp
 
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import API_URL, CITIES, DOMAIN, UPDATE_INTERVAL_HOURS
@@ -30,14 +31,17 @@ class NamozVaqtlariCoordinator(DataUpdateCoordinator):
             "country": "UZ",
             "method": self.method,
         }
+        session = async_get_clientsession(self.hass)
+        timeout = aiohttp.ClientTimeout(total=15)
         try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(API_URL, params=params, timeout=aiohttp.ClientTimeout(total=10)) as resp:
-                    if resp.status != 200:
-                        raise UpdateFailed(f"API xatosi: {resp.status}")
-                    data = await resp.json()
-                    return data["data"]["timings"]
-        except aiohttp.ClientError as err:
-            raise UpdateFailed(f"Ulanish xatosi: {err}") from err
-        except (KeyError, ValueError) as err:
-            raise UpdateFailed(f"Ma'lumot xatosi: {err}") from err
+            async with session.get(API_URL, params=params, timeout=timeout) as resp:
+                if resp.status != 200:
+                    raise UpdateFailed(f"API xatosi: {resp.status}")
+                data = await resp.json()
+                _LOGGER.debug("API javob: %s", data)
+                return data["data"]["timings"]
+        except UpdateFailed:
+            raise
+        except Exception as err:
+            _LOGGER.error("Namoz vaqtlari xatosi: %s", err)
+            raise UpdateFailed(f"Xato: {err}") from err
