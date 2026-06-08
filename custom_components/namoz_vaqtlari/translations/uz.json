@@ -1,0 +1,17 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Namoz Vaqtlari",
+        "description": "Shahar va hisoblash usulini tanlang",
+        "data": {
+          "city": "Shahar",
+          "method": "Hisoblash usuli"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Bu shahar allaqachon qo'shilgan"
+    }
+  }
+}

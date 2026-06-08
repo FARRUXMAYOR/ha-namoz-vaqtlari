@@ -1,0 +1,17 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Prayer Times",
+        "description": "Select your city and calculation method",
+        "data": {
+          "city": "City",
+          "method": "Calculation Method"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "This city is already configured"
+    }
+  }
+}
