@@ -2,25 +2,10 @@
   "config": {
     "step": {
       "user": {
-        "title": "Prayer Times — Select Source",
-        "description": "Where should prayer times be fetched from?",
-        "data": {
-          "source": "API Source"
-        }
-      },
-      "islomapi": {
-        "title": "Prayer Times — islomapi.uz",
-        "description": "Based on Uzbekistan Muslim Board data",
+        "title": "Prayer Times",
+        "description": "Select your city (data from islomapi.uz)",
         "data": {
           "city": "City"
-        }
-      },
-      "aladhan": {
-        "title": "Prayer Times — Aladhan.com",
-        "description": "Based on international calculation method",
-        "data": {
-          "city": "City",
-          "method": "Calculation Method"
         }
       }
     },
