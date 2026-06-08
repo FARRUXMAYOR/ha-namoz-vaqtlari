@@ -38,13 +38,15 @@ class NamozVaqtlariCoordinator(DataUpdateCoordinator):
                     raise UpdateFailed(f"islomapi.uz xatosi: {resp.status}")
                 data = await resp.json()
 
-                today_str = today.strftime("%Y-%m-%d")
+                # Faqat oy va kun bo'yicha qidirish (yil farq qilmasligi uchun)
+                today_md = today.strftime("-%m-%d")
                 for entry in data:
-                    if entry.get("date", "")[:10] == today_str:
+                    entry_date = entry.get("date", "")[:10]  # YYYY-MM-DD
+                    if entry_date.endswith(today_md):
                         _LOGGER.debug("Bugungi namoz vaqtlari: %s", entry["times"])
                         return entry["times"]
 
-                raise UpdateFailed(f"Bugungi ({today_str}) ma'lumot topilmadi")
+                raise UpdateFailed(f"Bugungi ({today.day}-{today.month}) ma'lumot topilmadi")
         except UpdateFailed:
             raise
         except Exception as err:
