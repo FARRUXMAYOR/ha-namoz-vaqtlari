@@ -1,0 +1,73 @@
+type: vertical-stack
+cards:
+  - type: custom:mushroom-title-card
+    title: 🕌 Namoz Vaqtlari
+    subtitle: "{{ now().strftime('%d-%m-%Y') }}"
+
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      - type: custom:mushroom-entity-card
+        entity: sensor.bomdod
+        name: Bomdod
+        icon: mdi:weather-night
+        icon_color: indigo
+        tap_action:
+          action: none
+
+      - type: custom:mushroom-entity-card
+        entity: sensor.quyosh
+        name: Quyosh
+        icon: mdi:weather-sunset-up
+        icon_color: orange
+        tap_action:
+          action: none
+
+      - type: custom:mushroom-entity-card
+        entity: sensor.ishroq
+        name: Ishroq
+        icon: mdi:weather-sunny
+        icon_color: yellow
+        tap_action:
+          action: none
+
+      - type: custom:mushroom-entity-card
+        entity: sensor.peshin
+        name: Peshin
+        icon: mdi:weather-sunny
+        icon_color: deep-orange
+        tap_action:
+          action: none
+
+      - type: custom:mushroom-entity-card
+        entity: sensor.asr
+        name: Asr
+        icon: mdi:weather-partly-cloudy
+        icon_color: amber
+        tap_action:
+          action: none
+
+      - type: custom:mushroom-entity-card
+        entity: sensor.shom
+        name: Shom
+        icon: mdi:weather-sunset-down
+        icon_color: pink
+        tap_action:
+          action: none
+
+      - type: custom:mushroom-entity-card
+        entity: sensor.xufton
+        name: Xufton
+        icon: mdi:weather-night-partly-cloudy
+        icon_color: purple
+        tap_action:
+          action: none
+
+      - type: custom:mushroom-entity-card
+        entity: sensor.tahajjud
+        name: Tahajjud
+        icon: mdi:star-crescent
+        icon_color: blue
+        tap_action:
+          action: none

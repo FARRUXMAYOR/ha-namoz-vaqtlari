@@ -1,10 +1,10 @@
 {
   "domain": "namoz_vaqtlari",
   "name": "Namoz Vaqtlari",
-  "version": "1.0.0",
-  "documentation": "https://github.com/YOUR_USERNAME/ha-namoz-vaqtlari",
-  "issue_tracker": "https://github.com/YOUR_USERNAME/ha-namoz-vaqtlari/issues",
-  "codeowners": ["@YOUR_USERNAME"],
+  "version": "2.2.0",
+  "documentation": "https://github.com/FARRUXMAYOR/ha-namoz-vaqtlari",
+  "issue_tracker": "https://github.com/FARRUXMAYOR/ha-namoz-vaqtlari/issues",
+  "codeowners": ["@FARRUXMAYOR"],
   "requirements": [],
   "iot_class": "cloud_polling",
   "config_flow": true
