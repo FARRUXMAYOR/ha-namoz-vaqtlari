@@ -17,13 +17,16 @@ CITIES = {
     "Urganch": "Urganch",
 }
 
+# API dan keladigan vaqtlar + hisoblanadiganlar
 PRAYER_NAMES = {
-    "tong_saharlik": "Saharlik",
-    "quyosh":        "Quyosh chiqishi",
+    "tong_saharlik": "Bomdod",
+    "quyosh":        "Quyosh",
+    "ishroq":        "Ishroq",
     "peshin":        "Peshin",
     "asr":           "Asr",
-    "shom_iftor":    "Shom / Iftor",
+    "shom_iftor":    "Shom",
     "hufton":        "Xufton",
+    "tahajjud":      "Tahajjud",
 }
 
 API_URL = "https://islomapi.uz/api/monthly"

@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 import logging
 from typing import Any
 
@@ -11,6 +11,16 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 from .const import API_URL, CITIES, DOMAIN, UPDATE_INTERVAL_HOURS
 
 _LOGGER = logging.getLogger(__name__)
+
+
+def _add_minutes(time_str: str, minutes: int) -> str:
+    """HH:MM formatdagi vaqtga daqiqa qo'shish."""
+    try:
+        t = datetime.strptime(time_str, "%H:%M")
+        t += timedelta(minutes=minutes)
+        return t.strftime("%H:%M")
+    except Exception:
+        return time_str
 
 
 class NamozVaqtlariCoordinator(DataUpdateCoordinator):
@@ -38,15 +48,18 @@ class NamozVaqtlariCoordinator(DataUpdateCoordinator):
                     raise UpdateFailed(f"islomapi.uz xatosi: {resp.status}")
                 data = await resp.json()
 
-                # Faqat oy va kun bo'yicha qidirish (yil farq qilmasligi uchun)
                 today_md = today.strftime("-%m-%d")
                 for entry in data:
-                    entry_date = entry.get("date", "")[:10]  # YYYY-MM-DD
-                    if entry_date.endswith(today_md):
-                        _LOGGER.debug("Bugungi namoz vaqtlari: %s", entry["times"])
-                        return entry["times"]
+                    if entry.get("date", "")[:10].endswith(today_md):
+                        times = entry["times"]
+                        # Ishroq = Quyosh + 20 daqiqa
+                        times["ishroq"] = _add_minutes(times.get("quyosh", ""), 20)
+                        # Tahajjud = Bomdod dan 1 soat oldin
+                        times["tahajjud"] = _add_minutes(times.get("tong_saharlik", ""), -60)
+                        _LOGGER.debug("Namoz vaqtlari: %s", times)
+                        return times
 
-                raise UpdateFailed(f"Bugungi ({today.day}-{today.month}) ma'lumot topilmadi")
+                raise UpdateFailed(f"Bugungi ma'lumot topilmadi")
         except UpdateFailed:
             raise
         except Exception as err:

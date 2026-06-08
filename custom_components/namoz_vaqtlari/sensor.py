@@ -27,9 +27,11 @@ class NamozSensor(CoordinatorEntity, SensorEntity):
         super().__init__(coordinator)
         self._key = key
         self._city = city
+        # Unique ID - shahar nomi bilan (lekin ko'rinishda shahar yo'q)
         uid = f"{DOMAIN}_{city}_{key}".lower().replace(" ", "_").replace("'", "").replace("/", "_")
         self._attr_unique_id = uid
-        self._attr_name = f"{name} ({city})"
+        # Nom — faqat namoz nomi, shahar yo'q
+        self._attr_name = name
         self._attr_icon = "mdi:clock-outline"
 
     @property
